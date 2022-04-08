@@ -1,0 +1,144 @@
+PRACTICAL 1:
+create table customer
+
+create table customer(cust_id char(5),firstName char(15),lastName char(15),area char(2),phone_no int);
+
+
+PRACTICAL 2:
+create table movie
+
+create table movie(movie_no int(5),title char(25),type char(10),star char(25),price int);
+
+
+PRACTICAL 3:
+create table invoice
+
+create table invoice(inv_no char(5),mv_no int(5),cust_id char(5),issue_date date,return_date date);
+
+
+PRACTICAL 4:
+insert the below record in the customer table
+
+insert into customer values('a01','patel','vijay','sa',381334),
+('a02','saitwal','vandana','mu',55603),
+('a03','jaguste','pramada','da',372631),
+('a04','navindgi','basu','ba',666612),
+('a05','sreedhran','ravi','va',null),
+('A06','','rukmini','ga',512527);
+
+PRACTICAL 5:
+insert the below record in the movie table
+
+insert into movie values(1,'bloody vengeance','action','jackie',180.95),
+						(2,'the firm','thriller','tom cruise',200.00),
+						(3,'pretty woman','romantic','richarge gere',150.00),
+						(4,'home alone','comedy','macaulay culkin',150.55),
+						(5,'the fugitive','thriller','hasrrison ford',200.00),
+						(6,'coma','suspence','michael douglas',100.00),
+						(7,'dracula','horror','gray oldman',150.00),
+						(8,'quick change','comedy','bill murray',100.00),
+						(9,'gone with the wind','drama','clarke gable',200.00),
+						(10,'carry on doctor','comedy','leslie phillips',100.00);
+	
+
+PRACTICAL 6:
+insert the below record in the invoice table
+
+insert into invoice values('i01',4,'a01','1996-01-13','1996-01-25'),
+('i02',3,'a02','1996-02-12','1996-02-15'),
+('i03',1,'a02','1996-02-15','1996-02-18'),
+('i04',6,'a03','1996-03-10','1996-03-13'),
+('i05',7,'a04','1996-02-05','1996-02-08'),
+('i06',2,'a06','1995-03-18','1996-03-21'),
+('i07',9,'a05','1996-01-07','1996-01-10'),
+('i08',9,'a01','1996-02-11','1996-02-14'),
+('i09',1,'a05','1996-02-15','1990-02-28');
+select * from invoice;
+
+
+PRACTICAL 7:
+create client_master table & insert the record and solve queries
+
+create table client_master(CLIENTNO varchar(6),NAME varchar(20),ADDRESS varchar(50),CITY varchar(20),PINCODE int,STATE varchar(20),BAL_DUE decimal(10,2));
+insert into client_master values('C0001','Rohan Joshi','Khapaitya Chakla','Surat',395003,'Gujarat',15000),
+('C0002',' Mamta Mazumdar','Salt Lake', 'Kolkata', 460012 ,'West Bengal', 5000),
+('C0003',' Chhaya Bankar',' Worli','Mumbai' ,400054,' Maharashtra', 2000),
+('C0004','Ashwini Rathod',' Ghangaur Ghat',' Udaipur', 780011,' Rajasthan', 7000),
+('C0005',' Ivan Bayross',' Indiranagar',' Bangalore',560050,' Karnataka', 1500),
+('C0006',' Deepak Sharma',' Bandra','Mumbai', 400002,' Maharashtra', 4300 ),
+('C0007',' Shymali Bhide',' Juhu','Mumbai', 470912 ,'Maharashtra', 2100); 
+select * from client_master order by BAL_DUE DESC;
+select * from client_master where city='mumbai';
+select distinct state from client_master;
+update client_master set CITY='Manglore' where CLIENTNO='C0005';
+update client_master set bal_due='1000' where clientno='C0001';
+DELETE FROM client_master WHERE state ='Rajasthan';
+alter table client_master add mobile_no bigint not null after bal_due;
+create table balance_details(clientno varchar(6) not null references client_master(CLIENTNO),client_name varchar(20) not null references client_master(NAME),balance int not null references client_master(BAL_DUE));
+select * from balance_details;
+alter table client_master rename to custoomer;
+select * from custoomer;
+insert into balance_details values('C0001','chirag mokariya',10000),
+('C0002','shyam mokariya','50000');
+alter table custoomer rename to client_master;
+select * from client_master;
+select * from balance_details;
+
+
+
+PRACTICAL 8:
+create employee table and incentives & solve queries
+
+use d1;
+create table employee(Employee_no int not null primary key,first_name varchar(20),last_name varchar(20),salary int,joining_date date,department varchar(20));
+insert into employee values(1,'john','abraham','100000','2013-01-01','banking'),
+(2,'michael','clarke','80000','2013-04-13','insurance'),
+(3,'roy','thomas','70000','2013-05-21','banking'),
+(4,'tom','jose','60000','2013-12-13','insurance'),
+(5,'jerry','pinto','65000','2014-02-14','marketing'),
+(6,'philip','mathew','45000','2014-07-01','services'),
+(7,'john','henry','55000','2015-01-01','technical'),
+(8,'ivan','bayross','60000','2015-08-15','sales');
+
+create table incentives(Employee_ref_id int not null references employee(Employee_no),incentive_date date not null,incentive_amount int not null);
+insert into incentives values(1,'2013-02-01',5000),
+(2,'2013-12-01',3000),
+(3,'2013-03-01',4000),
+(4,'2013-03-21',4500),
+(5,'2013-09-01',3500);
+select * from employee;
+select * from incentives;
+select * from fist_name,last_name employee;
+select first_name as employee_name from employee; 
+select upper(first_name) from employee;
+select distinct department from employee;
+
+
+PRACTICAL 9:
+queries of employee table
+
+select * from employee order by first_name asc;
+select * from employee order by last_name desc;
+select * from employee order by first_name asc;
+select * from employee where first_name='john';
+select * from employee where first_name in ('john','roy');
+select * from employee where first_name like 'j%';
+select * from employee where first_name like '%o%';
+select * from employee where first_name like '%n';
+select * from employee where first_name like '___%n';
+select * from employee where first_name like 'j%___';
+select * from employee where salary > 60000;
+select * from employee where salary < 80000;
+select * from employee where salary between 50000 and 80000;
+select * from employee where first_name in ('john','michael');
+select instr(first_name)from employee where first_name='john';
+select * from employee where salary=(select min(salary)from employee);
+select * from employee where salary=(select max(salary)from employee);
+select count(department)from employee;
+select avg(salary)from employee;
+
+
+PRACTICAL 10:
+queries
+
+select upper(first_name) from employee;
